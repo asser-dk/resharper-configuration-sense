@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using JetBrains.Annotations;
 using JetBrains.ProjectModel;
@@ -167,6 +168,7 @@ namespace Resharper.ConfigurationSense.Extensions
             return project.GetAllProjectFiles(
                 file => file.LanguageType.Is<JsonProjectFileType>()
                         && (file.Name.Equals(FileNames.NetCoreAppSettingsJson, StringComparison.OrdinalIgnoreCase)
+                            || Regex.IsMatch(file.Name, FileNames.NetCoreAppSettingsEnvironmentJsonRegex, RegexOptions.IgnoreCase)
                             || additionalConfigurationFiles.Contains(file.GetPersistentID())));
         }
 
